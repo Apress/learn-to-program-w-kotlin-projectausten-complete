@@ -40,6 +40,37 @@ class LineTest {
         Assert.assertEquals(2, words.size.toLong())
         Assert.assertEquals("hello", words[0])
         Assert.assertEquals("there", words[1])
+    }   
+        
+    @Test
+    fun ignorePunctuation() {
+        val line = Line("Hello. Goodbye! Yes? No, no.")
+        val words = line.words()
+        Assert.assertEquals(5, words.size)
+        Assert.assertEquals("hello", words[0])
+        Assert.assertEquals("goodbye", words[1])
+        Assert.assertEquals("yes", words[2])
+        Assert.assertEquals("no", words[3])
+        Assert.assertEquals("no", words[4])
+    }
+
+    @Test fun morePunctuation() {
+        val line = Line("Hello; _Goodbye_! X: 5")
+        val words = line.words()
+        Assert.assertEquals(4, words.size)
+        Assert.assertEquals("hello", words[0])
+        Assert.assertEquals("goodbye", words[1])
+        Assert.assertEquals("x", words[2])
+        Assert.assertEquals("5", words[3])
+    }
+
+    @Test
+    fun doubleQuotes() {
+        val line = Line("\"It's not.\"")
+        val words = line.words()
+        Assert.assertEquals(2, words.size)
+        Assert.assertEquals("it's", words[0])
+        Assert.assertEquals("not", words[1])
     }
 
     @Test
